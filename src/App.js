@@ -9,7 +9,6 @@ const Structure = styled.div`
   }
 `;
 
-
 function App() {
   return (
     <Structure>
