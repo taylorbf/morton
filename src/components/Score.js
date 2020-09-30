@@ -12,7 +12,9 @@ const LineChart = () => {
 
     console.log({composition});
 
-    const data = composition.map(note => ({ x: note.onset, y: note.frequency }))
+    const data = composition.map(note => ({ x: note.time, y: note.frequency }))
+
+    console.log({data})
 
 
     return (
@@ -21,7 +23,7 @@ const LineChart = () => {
                 height={window.innerHeight*0.2-40}
                 width={window.innerWidth}
                 padding={{ top: 0, bottom: 0 }}
-                domain={{ y: [0, 5000]}}
+                domain={{ y: [0, 1500] }}
                 // x: [-1000, 3*60*1000],
             >
                 <VictoryScatter
