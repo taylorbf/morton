@@ -25,6 +25,7 @@ const Frame = styled.div`
   background: #1d1f21 !important;
 	border-radius: 10px;
 	height: 70vh;
+	overflow: auto;
 `;
 
 const Highlighting = createGlobalStyle`
