@@ -1,4 +1,4 @@
-import { Note, Group, compose } from '../wonderscore';
+import { Note, Group, compose, compile } from '../wonderscore';
 
 /* define a motive */
 let a = new Group([
@@ -13,6 +13,21 @@ a = a.times(1/2)
 a = a.compress(1/6)
 a = a.repeat(4)
 console.log(a);
+
+const composition = new Group([
+  a,
+  a.times(9/8),
+  a.times(8/9),
+])
+
+const notes = compile(composition)
+console.log(notes)
+
+
+
+
+
+
 
 const work = compose([
   a,

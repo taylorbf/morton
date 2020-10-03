@@ -23,6 +23,15 @@ class Note {
   // ??
   duplicate() {}
 
+  compress(ratio) {
+    this.duration *= ratio;
+    return this;
+  }
+  
+  flatten() {
+    return [this];
+  }
+
 }
 
 export {Note};

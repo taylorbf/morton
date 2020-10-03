@@ -41,7 +41,7 @@ class Group {
   }
 
   compress(ratio) {
-    return new Group(this.clonedEvents().map(note => { note.duration *= ratio; return note;})) 
+    return new Group(this.clonedEvents().map(note => note.compress(ratio)))
   }
 
   repeat(reps) {
@@ -58,6 +58,15 @@ class Group {
     // }, []))
     // console.log(test)
     return new Group(events)
+  }
+
+  flatten() {
+    return this.clonedEvents().reduce((a,c) => {
+      return [
+        ...a,
+        ...c.flatten()
+      ]
+    }, [])
   }
 
 }
