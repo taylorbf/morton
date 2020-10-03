@@ -2,6 +2,9 @@ import * as Tone from 'tone';
 import React, { useEffect } from 'react';
 import composition from '../scores/01.js'
 
+
+const filter = new Tone.Filter(1500, "lowpass").toDestination();
+
 const sampler = new Tone.Sampler({
   urls: {
     A0: "A0.mp3",
@@ -37,32 +40,18 @@ const sampler = new Tone.Sampler({
   },
   release: 1,
   baseUrl: "https://tonejs.github.io/audio/salamander/"
-}).toDestination();
-
+}).connect(filter)
 
 const initAudio = async () => {
   await Tone.start()
   console.log('audio is ready')
-  //create a synth and connect it to the main output (your speakers)
-  const synth = new Tone.Synth().toDestination();
-
-
-
   Tone.Transport.bpm.value = 108;
   Tone.Transport.loop = false;
-
-
-
-  const keys = new Tone.PolySynth(Tone.Synth, {
-    volume: -4,
-  }).toDestination();
-
-  // sampler.triggerAttackRelease(400, 1)
 
   const notes = composition.map(note => [note.time/1000, note])
 
   new Tone.Part(((time, note) => {
-    sampler.triggerAttackRelease(note.frequency, note.duration/1000, time, note.velocity);
+    sampler.triggerAttackRelease(note.frequency, 4000, time, note.velocity);
   }), notes).start(0);
 
 }

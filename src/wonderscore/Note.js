@@ -8,13 +8,16 @@ class Note {
     // this.fade = initial[4] || 0;
   }
 
-  up() {}
+  up() {
+  }
 
   down() {}
 
-  times(parameter, ratio) {}
+  times(ratio) {
+    this.frequency *= ratio;
+    return this;
+  }
     // i.e. times('duration', 0.5)
-
   remove() {}
 
   // ??

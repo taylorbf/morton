@@ -32,6 +32,34 @@ class Group {
     return _.cloneDeep(this.events)
   }
 
+  times(ratio) {
+    return new Group(this.clonedEvents().map(note => note.times(ratio))) 
+  }
+
+  timesBy() {
+
+  }
+
+  compress(ratio) {
+    return new Group(this.clonedEvents().map(note => { note.duration *= ratio; return note;})) 
+  }
+
+  repeat(reps) {
+    let events = []
+    for (let i=0;i<reps;i++) {
+      events = events.concat(this.clonedEvents())
+    }
+    // const test = new Group(Array(reps).reduce((accum, curr) => {
+    //   console.log(accum)
+    //   return [
+    //     ...accum,
+    //     this.clonedEvents()
+    //   ]
+    // }, []))
+    // console.log(test)
+    return new Group(events)
+  }
+
 }
 
 export {Group};
