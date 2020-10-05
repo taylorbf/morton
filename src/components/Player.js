@@ -1,6 +1,6 @@
 import * as Tone from 'tone';
 import React, { useEffect } from 'react';
-import composition from '../scores/01.js'
+import composition from '../scores/dev.js'
 
 
 const filter = new Tone.Filter(1500, "lowpass").toDestination();
@@ -45,7 +45,7 @@ const sampler = new Tone.Sampler({
 const initAudio = async () => {
   await Tone.start()
   console.log('audio is ready')
-  Tone.Transport.bpm.value = 108;
+  Tone.Transport.bpm.value = 60;
   Tone.Transport.loop = false;
 
   const notes = composition.map(note => [note.time/1000, note])
