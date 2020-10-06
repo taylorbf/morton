@@ -19,6 +19,12 @@ class Group {
     return new Group(this.clonedEvents().sort(() => Math.random() - 0.5))
   }
 
+  slice(start=0,end=1) {
+    const startIndex = Math.floor(start * this.events.length)
+    const endIndex = Math.ceil(end * this.events.length)
+    return new Group(this.clonedEvents().slice(startIndex,endIndex));
+  }
+
   toRoot() {
 
   }

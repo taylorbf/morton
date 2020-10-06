@@ -2,7 +2,7 @@ class Note {
 
   constructor(...initial) {
     this.frequency = initial[0] || 440;
-    this.duration = initial[1] || 1000;
+    this.duration = initial[1] >=0 ? initial[1] : 1000;
     this.velocity = initial[2] || 0.5;
     this.pan = initial[3] || 0.5;
     // this.fade = initial[4] || 0;
