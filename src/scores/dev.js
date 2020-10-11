@@ -1,4 +1,7 @@
-import { Note, Group, compose, compile, loop } from '../wonderscore';
+import { Note, Group, compile, loop, pick } from '../wonderscore';
+import seedrandom from 'seedrandom';
+seedrandom('wonderscore', { global: true });
+
 
 /* define a motive */
 let a = new Group([
@@ -13,22 +16,15 @@ let intervals = [9/8, 3/2, 4/3, 2/1, 3/1]  // 7/4,
 let rates = [1/2, 2/3, 2.5, 1.1, 0.8, 1.8]
 let reps = [1, 2, 3]
 
-const rm = 1.167//7.4321//0.73 // random multiplier
-const rx = index => (index % rm) / rm;
-
-const pick = arr => arr[Math.floor(Math.random()*arr.length)]
-
-const picki = (arr, index) => arr[Math.floor(rx(index)*arr.length)]
-
 const composition = new Group(
-  loop(50, index => {
-    const start = rx(index)
-    const end = rx(index) * (1 - start) + start
+  loop(15, index => {
+    const start = Math.random()
+    const end = Math.random() * (1 - start) + start
     return a
       .slice(start, end)
-      .times(picki(intervals, index))
-      .compress(picki(rates, index))
-      .repeat(picki(reps, index))
+      .times(pick(intervals, index))
+      .compress(pick(rates, index))
+      .repeat(pick(reps, index))
       .modulate('frequency',phase => (Math.floor(phase*6)+1) * 0.25)
       .modulate('frequency',phase => Math.sin(phase * Math.PI) / 100 + 0.995)
       .modulate('duration',phase => phase * 3)
@@ -39,27 +35,3 @@ const composition = new Group(
 const notes = compile(composition)
 
 export default notes;
-
-
-
-
-
-
-// const work = compose([
-//   a,
-//   a.times(9/8),
-//   a.times(10/9),
-// ])
-
-// export default work;
-
-
-
-// new Note(440, 400, 0.5),
-// new Note(660, 400, 0.3),
-// new Note(495, 400, 0.6),
-// new Note(330, 400, 0.4),
-// new Note(440, 400, 0.5),
-// new Note(495, 400, 0.6),
-// new Note(660, 400, 0.5),
-// new Note(770, 400, 0.4),
