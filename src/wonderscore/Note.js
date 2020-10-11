@@ -13,8 +13,8 @@ class Note {
 
   down() {}
 
-  times(ratio) {
-    this.frequency *= ratio;
+  times(ratio,param='frequency') {
+    this[param] *= ratio;
     return this;
   }
     // i.e. times('duration', 0.5)

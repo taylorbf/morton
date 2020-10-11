@@ -38,8 +38,8 @@ class Group {
     return _.cloneDeep(this.events)
   }
 
-  times(ratio) {
-    return new Group(this.clonedEvents().map(note => note.times(ratio))) 
+  times(ratio,param) {
+    return new Group(this.clonedEvents().map(note => note.times(ratio,param))) 
   }
 
   timesBy() {
@@ -73,6 +73,10 @@ class Group {
         ...c.flatten()
       ]
     }, [])
+  }
+
+  modulate(param,func) {
+    return new Group(this.clonedEvents().map((note,index) => note.times(func(index/this.events.length),param))) 
   }
 
 }
