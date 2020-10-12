@@ -26,7 +26,7 @@ const composition = new Group(
       .compress(pick(rates, index))
       .repeat(pick(reps, index))
       .modulate('frequency',phase => (Math.floor(phase*6)+1) * 0.25)
-      .modulate('frequency',phase => Math.sin(phase * Math.PI) / 100 + 0.995)
+      // .modulate('frequency',phase => Math.sin(phase * Math.PI) / 100 + 0.995)
       .modulate('duration',phase => phase * 3)
       .modulate('velocity',phase => 1-phase/4 )
   })

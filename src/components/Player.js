@@ -1,7 +1,9 @@
 import * as Tone from 'tone';
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import composition from '../scores/dev.js'
+import Nexus from 'nexusui';
 
+console.log("Nexus", Nexus)
 
 const filter = new Tone.Filter(1300, "lowpass").toDestination();
 
@@ -40,6 +42,8 @@ const sampler = new Tone.Sampler({
   baseUrl: process.env.PUBLIC_URL + '/audio/'
 }).connect(filter)
 
+let audioReady = false;
+
 const initAudio = async () => {
   await Tone.start()
   console.log('audio is ready')
@@ -52,18 +56,37 @@ const initAudio = async () => {
     sampler.triggerAttackRelease(note.frequency, 4000, time, note.velocity);
   }), notes).start(0);
 
+  audioReady = true;
 }
 
-const start = () => Tone.Transport.start();
-const stop = () => Tone.Transport.stop();
+const start = async () => {
+  console.log('starting...')
+  if (!audioReady) {
+    console.log('starting audio')
+    await initAudio()
+  }
+  Tone.Transport.start()
+};
+const stop = () => Tone.Transport.pause();
 
 const Player = () => {
+  useLayoutEffect(() => {
+    const toggle = new Nexus.Add.Toggle('#container')
+    toggle.on('change', v => v ? start() : stop())
 
+    const progress = new Nexus.Add.Slider('#container', { 'size': [500,20],})
+    const progressInterval = setInterval(() => {
+      console.log(Tone.Transport.seconds, progress)
+      progress.value = Tone.Transport.seconds/180;
+    }, 200)
+    return () => clearInterval(progressInterval)
+  }, [])
   return (
     <>
-      <button onClick={initAudio}>init</button>
+      <div id="container" />
+      {/* <button onClick={initAudio}>init</button>
       <button onClick={start}>play</button>
-      <button onClick={stop}>stop</button>
+      <button onClick={stop}>stop</button> */}
     </>
   )
 }
